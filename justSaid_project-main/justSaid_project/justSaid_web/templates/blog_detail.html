@@ -77,12 +77,9 @@
                   <button type="submit" , name="post_id" , value="{{ post.id }}" , class="w3-buttonOrange w3-margin-bottom"><i class="fa fa-thumbs-up fa-2x"> </i><span class="w3-badge w3-right w3-small w3-animate-zoom">{{ total_likes }}</span></button>
                   
                   {% endif %}
-              <a href="{% url 'home' %}">
-                <button class="btn btn-orange pull-right w3-margin-bottom" type="submit"><i class="fa fa-home"></i> Back</button>
-                </a>
-              <a href="{% url 'add_comment' post.pk %}">
-                <button class="btn btn-orange pull-right w3-margin-bottom w3-margin-right" type="submit"><i class="fa fa-pencil fa-fw"></i>Add Comment</button>
-                </a>
+
+                <a href="{% url 'home' %}" class="btn btn-orange pull-right w3-margin-bottom w3-margin-right"><i class="fa fa-home"></i> Back</a>
+                <a href="{% url 'add_comment' post.pk %}" class="btn btn-orange pull-right w3-margin-bottom w3-margin-right"><i class="fa fa-pencil fa-fw"></i>Add Comment</a>
 
               </form>
               {% else %}
