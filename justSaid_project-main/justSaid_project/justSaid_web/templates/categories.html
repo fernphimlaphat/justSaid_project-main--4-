@@ -1,6 +1,7 @@
 <!-- หน้า categories -->
-
 {% extends 'base.html' %}
+{% load static %}
+
 {% block title %}{{ post.title }}{% endblock %}
 
 {% block content %}
@@ -11,43 +12,20 @@
 <!-- show post in that categories  -->
 <ul>
     {% for post in category_posts %}
-
-    <li> <a href="{% url 'blog-detail' post.pk %}">{{ post.title }}</a> - {{ post.category }} -
-            {{ post.author.first_name }} {{ post.author.last_name }} -
-            {{ post.post_date }}
-
-            {% if user.is_authenticated %}
-            <small>
-                <a href="{% url 'update_post' post.pk %}">(Edit)</a>
-
-                <a href="{% url 'delete_post' post.pk %}">(Delete)</a>
-                {% endif %}
-            </small><br />
-            {{ post.body|slice:":200" }}
-
-            <a href="{% url 'blog-detail' post.pk %}" class="w3-card w3-round w3-margin notification-list notification-list--unread text-dark  ">
+            <a href="{% url 'blog-detail' post.pk %}" class="w3-card w3-round w3-margin notification-list text-dark" style="text-decoration: none;">
                 <div class="notification-list_img">
-                  <img src="images/users/user1.jpg" alt="user">
+                  <img src="{{ post.author.profile.profile_pic.url }}" alt="user">
                 </div>
 
 
                 <div class="notification-list_detail">
-                  <p><b>{{ post.author.first_name }} {{ post.author.last_name }}</b> <br><span class="text-muted">{{ post.category }}</span></p>
-                  <!-- หัวข้อเรื่อง -->
+                  <p><b>{{ post.author.first_name }} {{ post.author.last_name }}</b> <br>
+                    <span class="text-muted">{{ post.category }}</span></p>
                   <p class="w3-text-orange">{{ post.title }}</p> 
-                  <p class="nt-link">{{ post.body|slice:":200" }}</p> 
-
-                  <!-- nt-link แถบสีข้างซ้าย -->
-                  
+                  <p class="nt-link">{{ post.body|slice:":60" }}...</p>
                 </div>
-                
                 <p><small>{{ post.post_date }}</small></p>
-                
-                
               </a>
-        
-        </li>
-
     {% endfor %}
 </ul>
 {% else %}

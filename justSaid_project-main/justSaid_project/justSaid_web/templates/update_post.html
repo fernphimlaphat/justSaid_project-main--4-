@@ -3,26 +3,26 @@
 
 
 {% block content %}
-
-
-
-
 {% if user.is_authenticated %}
-    {% if user.id == post.author.id %}
-    <h1>Update post</h1>
-    <br /><br />
-    <div class="form-group">
-        <form method="POST">
-            {% csrf_token %}
-            {{ form.media }}
-            {{ form.as_p }}
-            <button class="btn btn-secondary">Edit</button>
+{% if user.id == post.author.id %}
+<div class="w3-container w3-card w3-orange w3-round w3-margin">
+    <div class="panel-body">
+        <div class="form-group">
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.media }}
+                {{ form.as_p }}
+                <button class="btn btn-orange pull-right w3-margin-bottom w3-margin-right" type="submit"><i
+                        class="fa fa-pencil fa-fw"></i>Edit
+                </button>
+        </div>
     </div>
-    {% else %}
+</div>
+{% else %}
 
-     You'e not allowed here!
+You'e not allowed here!
 
-    {% endif %}
+{% endif %}
 {% else %}
 
 You'e not allowed here!
