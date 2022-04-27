@@ -5,38 +5,13 @@
 
 {% block content %}
 
-<h1>Post</h1>
-<ul>
-    <!-- แสดง post  -->
-    {% for post in object_list %}
-    <li> <a href="{% url 'blog-detail' post.pk %}">{{ post.title }}</a> -
-        <a href="{% url 'category' post.category|slugify %}">{{ post.category }}</a> -
-        {{ post.author.username }} -
-        {{ post.post_date }}
-
-        {% if user.is_authenticated %}
-            {% if user.id == post.author.id %}
-        <small>
-            <a href="{% url 'update_post' post.pk %}">(Edit)</a>
-
-            <a href="{% url 'delete_post' post.pk %}">(Delete)</a>
-
-            {% endif %}
-        {% endif %}
-        </small><br />
-        {{ post.snippet}}
-    </li>
-    {% endfor%}
-</ul>
-
 <ul>
     {% for post in object_list %}
             <a href="{% url 'blog-detail' post.pk %}" class="w3-card w3-round w3-margin notification-list text-dark" style="text-decoration: none;">
                 <div class="notification-list_img">
                   <img src="{{ post.author.profile.profile_pic.url }}" alt="user">
                 </div>
-
-
+                
                 <div class="notification-list_detail">
                   <p><b>{{ post.author.first_name }} {{ post.author.last_name }}</b> <br>
                     <span class="text-muted">{{ post.category }}</span></p>
@@ -44,6 +19,20 @@
                   <p class="nt-link">{{ post.body|slice:":60" }}...</p>
                 </div>
                 <p><small>{{ post.post_date }}</small></p>
+                {% if user.is_authenticated %}
+                {% if user.id == post.author.id %}
+            <small>
+                <a href="{% url 'delete_post' post.pk %}">
+                    <button class="btn btn-orange w3-margin-bottom w3-margin-left" type="submit"><i class="fa fa-trash"></i></button>
+                    </a>
+
+                    <a href="{% url 'update_post' post.pk %}">
+                        <button class="btn btn-orange w3-margin-bottom" type="submit"><i class="fa fa-edit"></i></button>
+                        </a>
+                {% endif %}
+            {% endif %}
+            </small>
+                
               </a>
     {% endfor %}
 </ul>

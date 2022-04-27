@@ -1,21 +1,36 @@
 {% extends 'base.html' %}
-{% block title %}Edit Profile{% endblock %}   
+{% block title %}Edit Profile{% endblock %}
 
 
 {% block content %}
 
-<h1>Edit Setting</h1>
-<br/><br/>
 
-{{ user.profile.bio }}
-<br/><br/>
+<div class="w3-container w3-content">
+    <div class="w3-row">
+        <div class="w3-col m1">
+            <br>
+        </div>
 
-<div class="form-group">
-<form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button class="btn btn-secondary">Update Profile</button>
+        <div class="w3-col m8">
 
+            <div class="w3-container w3-card w3-orange w3-round w3-margin">
+                <div class="panel-body">
+                    <span class="login100-form-title">
+                        Setting
+                    </span>
+                    <div class="form-group">
+                        <form method="POST">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <a href="{% url 'home' %}">
+                                <button class="btn btn-orange pull-left w3-margin" type="submit"><i class="fa fa-cog"></i>Setting</button>
+                                </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
 </div>
 
 

@@ -4,20 +4,25 @@
 
 {% block content %}
 {% if user.is_authenticated %}
-<h1>Create Profile Page...</h1>
-<br/><br/>
-
-<!-- ฟอร์ม add post -->
-<div class="form-group">
-<form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    
-    {{ form.as_p }}
-    <button class="btn btn-secondary">Create Profile Page</button>
-
+<div class="w3-container w3-card w3-orange w3-round w3-margin">
+    <div class="panel-body">
+        <span class="login100-form-title">
+            Create Profile
+        </span>
+        <div class="form-group">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                
+                {{ form.as_p }}
+                <a href="{% url 'home' %}">
+                    <button class="btn btn-orange pull-left w3-margin" type="submit"><i class="fa fa-pencil"></i> Create Profile Page</button>
+                    </a>
+            
+            </div>
+      <div class="mar-top clearfix">
+      </div>
+    </div>
 </div>
-
-
 {% else %}
 
 You'e not allowed here!

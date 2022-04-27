@@ -1,31 +1,54 @@
 {% extends 'base.html' %}
-{% block title %}Edit Profile{% endblock %}   
+{% block title %}Edit Profile{% endblock %}
 
 
 {% block content %}
 
 {% if user.is_authenticated %}
-    {% if user.id == profile.user.id %}
-<h1>Edit Profile</h1>
-<br/><br/>
+{% if user.id == profile.user.id %}
+<div class="w3-container w3-content">
+    <div class="w3-row">
+        <div class="w3-col m2">
+            <br>
+        </div>
 
-<!-- ฟอร์ม add post -->
-<div class="form-group">
-<form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button class="btn btn-secondary">Update Profile Page</button>
+        <div class="w3-col m7">
 
+            <div class="w3-container w3-card w3-orange w3-round w3-margin">
+                <div class="panel-body">
+                    <span class="login100-form-title">
+                        Setting
+                    </span>
+
+
+                    <div class="form-group">
+                        <form method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+
+                            <a href="{% url 'home' %}">
+                                <button class="btn btn-orange pull-left w3-margin" type="submit"><i
+                                        class="fa fa-cog"></i>Update Profile</button>
+                            </a>
+
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-
-    {% else %}
-
-    You'e not allowed here!
-
-    {% endif %}
 {% else %}
 
 You'e not allowed here!
-    
+
 {% endif %}
+{% else %}
+
+You'e not allowed here!
+
+{% endif %}
+
+
+
 {% endblock %}

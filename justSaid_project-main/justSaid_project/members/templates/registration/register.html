@@ -1,19 +1,32 @@
 {% extends 'base.html' %}
-{% block title %}Register{% endblock %}   
+{% load static%}
+{% block title %}Login{% endblock %}
 
 
 {% block content %}
 
-<h1>Register</h1>
-<br/><br/>
+<div class="container-login100">
+    <div class="form-group wrap-login100">
+        
+        <div class="login100-pic" data-tilt>
+            <img src="{% static 'image/F6F625AA-4933-4F72-A728-648D4F52D567.png' %}" alt="IMG">
+        </div>
 
+        <form method="POST" class="login100-form validate-form">
+            <span class="login100-form-title">
+                Register
+            </span>
 
-<div class="form-group">
-<form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button class="btn btn-secondary">Register</button>
-
+            {% csrf_token %}
+            {{ form.as_p }}
+            
+            <div class="container-login100-form-btn ">
+                <button class="login100-form-btn w3-margin-bottom">
+                    register
+                </button>
+            </div>
+        </form>
+    </div>
 </div>
 
 

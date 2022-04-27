@@ -1,52 +1,99 @@
-<!-- หน้า home -->
-
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}User Profile{% endblock %}
 
 {% block content %}
-
-<h1>User Profile</h1>
-<br/>
 {{ page_user }}
-<div class="card mb-3" >
-    <div class=" row g-0">
-    <div class="col-md-2">
-{% if page_user.profile_pic %}
-        <img src="{{ page_user.profile_pic.url }}" class="img-fluid rounded-start" width="200" height="200">
-{% else %}    
-    <img src="{% static 'justSaid_web/images/kmitl.jpg' %}" class="img-fluid rounded-start" width="200" height="200">
-    {% endif %}
-    </div>
-    <div class="col-md-10">
-        <div class="card-body">
-
-            <h5 class="card-title">{{ page_user.user.username }}</h5>
-            <p class="small text-muted">
+{% if user.is_authenticated %}
+<div class="w3-container w3-content">    
+    <div class="w3-row">
+        <div class="w3-col m3">
+            <div class="w3-card w3-round w3-orange">
+                <div class="w3-container">
                 
-                {% if post.author.profile.website_url %}
-                <a href="{{ page_user.website_url }}"> Website | </a>
-                {% endif %}
+					{% if page_user.profile_pic %}
+					<img src="{{ page_user.profile_pic.url }}" class="img-fluid rounded-start" width="200" height="200">
+			{% else %}    
+				<img src="{% static 'images/kmitl.jpg' %}" class="img-fluid rounded-start" width="200" height="200">
+				{% endif %}
 
-                {% if post.author.profile.facebook_url %}
-                <a href="{{ page_user.facebook_url }}"> Facebook | </a>
-                {% endif %}
+                 <hr>
+                
+                 <p><button><a href="{{ page_user.website_url }}" class="w3-bar-item w3-button w3-hover-none"><i class="fa fa-globe"></i></a></button>Website</p>
 
-                {% if post.author.profile.twitter_url %}
-                <a href="{{ page_user.twitter_url }}">Twitter | </a>
-                {% endif %}
+                 <p><button><a href="{{ page_user.facebook_url }}" class="w3-bar-item w3-button w3-hover-none"><i class="fa fa-facebook-f"></i></a></button>Facebook</p>
 
-                {% if post.author.profile.instragram_url %}
-                <a href="{{ page_user.instragram_url }}">Instragram | </a>
-                {% endif %}
-
-                {% if post.author.profile.pinterest_url %}
-                <a href="{{ page_user.pinterest_url }}">Pinterest </a>
-                {% endif %}
-            </p>
-            <p class="card-text">{{ page_user.bio }}</p>
+                 <p><button><a href="{{ page_user.twitter_url }}" class="w3-bar-item w3-button w3-hover-none"><i class="fa fa-twitter"></i></a></button>Twitter</p>
+ 
+                 <p><button><a href="{{ page_user.instragram_url }}" class="w3-bar-item w3-button w3-hover-none"><i class="fa fa-instagram"></i></a></button>Instragram</p>
+ 
+                 <p><button><a href="{{ page_user.pinterest_url }}" class="w3-bar-item w3-button w3-hover-none"><i class="fa fa-pinterest-p"></i></a></button>Pinterest</p>
+                 <p><button><a href="#" class="w3-bar-item w3-button w3-hover-none"><i class="fa fa-toggle"></i></a></button>Bio {{ page_user.bio }}</p>
+                </div>
+              </div>
         </div>
+
+        <!-- โพสต์ -->
+        <div class="w3-col m9 ">
+            <div class="w3-container w3-card w3-orange w3-round w3-margin w3-margin-top "><br>
+                <img src="/w3images/avatar2.png" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
+                <span class="w3-right w3-opacity">{{ post.post_date }}<button><a href="#" class="w3-button w3-hover-none" title="Report"><i class="fa fa-share-alt fa-2x"></i></a></button>
+                </span>
+
+                <h4>By : {{ post.author.username }}</h4><br>
+                                <!-- ลบ/แก้ไข -->
+                                {% if user.is_authenticated %}
+                                {% if user.id == post.author.id %}
+                                <a class="w3-right w3-margin-right w3-text-gray" href="{% url 'update_post' post.pk %}" title="Delete"><i class="fa fa-pencil fa-2x"></i></a>
+                                <a class="w3-right w3-margin-right w3-text-gray" href="{% url 'delete_post' post.pk %}" title="Edit"><i class="fa fa-trash fa-2x"></i></a>
+                                {% endif %}
+                                {% endif %}
+                <br>
+                <hr class="w3-clear">
+                <h1 href="#" class="w3-bar-item w3-buttonw3-hover-none text-decoration-none"><h4 class="w3-text-orange">{{ post.title }}</h4><br></h1>
+                <textarea style="border: none;" class="form-control w3-margin-bottom w3-orange" rows="15" >{{ post.body}}</textarea>
+
+            
+   
+              <small><a href="{% url 'login' %}">Login</a> to like
+                  </small>
+            </div>
+
+            <!-- comment -->
+            {% if not post.comments.all %}
+            {% else %}
+            <div class="bootstrap snippets">
+            
+                <div class="w3-container w3-card w3-orange w3-round w3-margin">
+                    <div class="panel-body w3-orange">
+                        <!-- Newsfeed Content -->
+                        {% for comment in post.comments.all %} 
+                        <div class="media-block w3-margin-top">
+                          <!-- <a class="media-left" href="#"><img class="img-circle img-sm" alt="Profile Picture" src="https://bootdey.com/img/Content/avatar/avatar1.png"></a> -->
+                          <div class="media-body">
+                            <div class="mar-btm">
+                              <a href="#" class=" btn-link text-semibold media-heading box-inline w3-margin-top w3-text-blue" style="text-decoration: none;"><h5>{{comment.name}}</h5></a>
+                              <p class="text-muted text-sm">{{comment.date_added}}</p>
+                            </div>
+                            <textarea style="border: none;" class="form-control w3-margin-bottom w3-orange" rows="4" >{{comment.body}}</textarea>    
+                            <hr class="new4">
+                          </div>
+                        </div>
+                        {% endfor %}
+                        {% endif %}    
+
+                      </div>
+            
+                </div>
+            </div>
+
+        </div>
+        
     </div>
 </div>
+{% else %}
 
+You'e not allowed here!
+
+{% endif %}
 {% endblock %}
