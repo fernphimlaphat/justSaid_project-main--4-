@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}Comment on blog{% endblock %}
+
+
+{% block content %}
+{% if user.is_authenticated %}
+<br /><br />
+
+<!-- ฟอร์ม add post -->
+
+<div class="w3-container w3-content">
+    <div class="w3-row">
+        <div class="w3-container w3-card w3-orange w3-round ">
+            <div class="panel-body w3-margin-top">
+                <div class="form-group">
+                    <form method="POST">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button class="btn btn-orange pull-right w3-margin-bottom" type="submit"><i
+                                class="fa fa-pencil fa-fw"></i> Comment</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}
